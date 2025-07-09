@@ -3,20 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bouncing Gift Box with Password</title>
+    <title>Birthday Wish Website</title>
     <style>
-        /* Existing styles */
+        /* Global Styles */
         body {
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            flex-direction: column;
-            overflow: hidden;
+            background-color: #f1f1f1;
         }
 
+        /* Full-Screen Background Image */
+        .background-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("untitled (1 of 1)-8.JPG"); /* Replace with your image URL */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: -1; /* Ensure it's behind other elements */
+        }
+
+        /* Gift Box */
         .gift-box {
             width: 200px;
             height: 200px;
@@ -30,24 +45,88 @@
             50% { transform: translateY(-30px); }
         }
 
-        /* New Styles for Background and Flowers */
-        .background-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            background-image: url("untitled (1 of 1)-8.JPG"); /* Replace with your image URL */
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+        /* Happy Birthday Message */
+        .explosion {
+            display: none;
+            font-size: 40px;
+            font-weight: bold;
+            color: #000000;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1s ease-in-out;
+            text-align: center;
         }
 
+        /* Password Input */
+        .password-box {
+            display: none;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 18px;
+            border: 2px solid #d00ea9;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #ff4081;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        /* Hint */
+        .hint {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #4f4d4d;
+        }
+
+        /* Final Message */
+        .final-message {
+            display: none;
+            font-size: 24px;
+            font-weight: normal;
+            color: darkblue;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1s ease-in-out;
+            text-align: center;
+            padding: 0 100px;
+        }
+
+        /* Wrong Password Message */
+        .wrong-password {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .wrong-password img {
+            width: 100px;
+            height: auto;
+        }
+
+        .wrong-password p {
+            font-size: 18px;
+            color: rgb(186, 26, 201);
+            font-weight: bold;
+        }
+
+        /* Flower Shower Animation */
         .flower-shower {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none; /* Ensure flowers don't block interactions */
+            pointer-events: none;
         }
 
         .flower {
@@ -71,18 +150,20 @@
                 transform: translateY(calc(100% + 200px));
             }
         }
+
+        /* Audio */
+        audio {
+            display: none;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Background Container -->
-    <div class="background-container">
-        <!-- Gift Box Image (Centered) -->
-        <img src="gift_box.png" alt="Gift Box" class="gift-box" id="giftBox" onclick="openGift()">
+    <!-- Full-Screen Background -->
+    <div class="background-container"></div>
 
-        <!-- Flower Shower -->
-        <div class="flower-shower" id="flowerShower"></div>
-    </div>
+    <!-- Gift Box Image (Centered) -->
+    <img src="gift_box.png" alt="Gift Box" class="gift-box" id="giftBox" onclick="openGift()">
 
     <!-- Happy Birthday Message -->
     <div class="explosion" id="message">🎉 Happy Birthday! 🎉</div>
@@ -107,6 +188,9 @@
         Hey! I hope you're doing great and feeling happy. Just wanted to send you the best birthday wishes! May your day be filled with joy, laughter, and unforgettable moments. Wishing you a year ahead filled with love, success, and all your dreams coming true. And don’t worry, I’m not here to spill any surprises! 😆😂 Happy Birthday! 🎉🥳
     </div>
 
+    <!-- Flower Shower -->
+    <div class="flower-shower" id="flowerShower"></div>
+
     <!-- Audio -->
     <audio id="birthdayAudio">
         <source src="happy_birthday.mp3" type="audio/mp3">
@@ -118,7 +202,6 @@
             const message = document.getElementById('message');
             const passwordBox = document.getElementById('passwordBox');
             const audio = document.getElementById("birthdayAudio");
-            const flowerShower = document.getElementById('flowerShower');
 
             // Hide the gift box
             giftBox.style.display = "none";
@@ -131,9 +214,6 @@
 
             // Play the birthday song
             audio.play();
-
-            // Add flower shower animation
-            createFlowerShower(flowerShower);
         }
 
         function checkPassword() {
@@ -142,12 +222,16 @@
             const wrongMessage = document.getElementById('wrongMessage');
             const passwordBox = document.getElementById('passwordBox');
             const message = document.getElementById('message'); // Get the birthday message element
+            const flowerShower = document.getElementById('flowerShower');
 
             if (password === "02052025meency") {
                 passwordBox.style.display = "none"; // Hide password input
                 wrongMessage.style.display = "none"; // Hide wrong password message
                 finalMessage.style.display = "block"; // Show final message
                 message.style.display = "none"; // Hide the "Happy Birthday" message
+
+                // Trigger flower shower animation
+                createFlowerShower(flowerShower);
             } else {
                 wrongMessage.style.display = "block"; // Show wrong password message
             }
