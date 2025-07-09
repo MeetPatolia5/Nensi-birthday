@@ -5,19 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bouncing Gift Box with Password</title>
     <style>
+        /* Existing styles */
         body {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f1f1f1;
             font-family: Arial, sans-serif;
             flex-direction: column;
             overflow: hidden;
         }
 
-        /* Bouncing Gift Box - Centered */
         .gift-box {
             width: 200px;
             height: 200px;
@@ -26,99 +25,64 @@
             animation: bounce 2s infinite ease-in-out;
         }
 
-        /* Explosion Effect */
-        .explosion {
-            display: none;
-            font-size: 40px;
-            font-weight: bold;
-            color: #000000;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-            animation: fadeIn 1s ease-in-out;
-            text-align: center;
-        }
-
-        /* Password Input */
-        .password-box {
-            display: none;
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        input {
-            padding: 10px;
-            font-size: 18px;
-            border: 2px solid #d00ea9;
-            border-radius: 5px;
-            outline: none;
-        }
-
-        button {
-            padding: 10px 20px;
-            font-size: 18px;
-            background-color: #ff4081;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-left: 10px;
-        }
-
-        
-
-        /* Password Hint */
-        .hint {
-            margin-top: 10px;
-            font-size: 18px;
-            color: #4f4d4d;
-        }
-
-        /* Final Message */
-        .final-message {
-            display: none;
-            font-size: 24px;  /* Reduced the font size */
-            font-weight: normal;  /* Changed to normal weight */
-            color: darkblue;  /* Changed to dark blue */
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-            animation: fadeIn 1s ease-in-out;
-            text-align: center;
-            padding: 0 100px;
-        }
-
-        /* Wrong Password Message */
-        .wrong-password {
-            display: none;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .wrong-password img {
-            width: 100px;
-            height: auto;
-        }
-
-        .wrong-password p {
-            font-size: 18px;
-            color: rgb(186, 26, 201);
-            font-weight: bold;
-        }
-
-        /* Bouncing Animation */
         @keyframes bounce {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-30px); }
         }
 
-        /* Explosion Effect */
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: scale(0.5); }
-            100% { opacity: 1; transform: scale(1); }
+        /* New Styles for Background and Flowers */
+        .background-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-image: url("untitled (1 of 1)-8.JPG"); /* Replace with your image URL */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .flower-shower {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none; /* Ensure flowers don't block interactions */
+        }
+
+        .flower {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-image: url("flower.png"); /* Replace with your flower image URL */
+            background-size: cover;
+            background-repeat: no-repeat;
+            opacity: 0;
+            animation: fall 3s linear forwards;
+        }
+
+        @keyframes fall {
+            0% {
+                opacity: 1;
+                transform: translateY(-100%);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(calc(100% + 200px));
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Gift Box Image (Centered) -->
-    <img src="gift_box.png" alt="Gift Box" class="gift-box" id="giftBox" onclick="openGift()">
+    <!-- Background Container -->
+    <div class="background-container">
+        <!-- Gift Box Image (Centered) -->
+        <img src="gift_box.png" alt="Gift Box" class="gift-box" id="giftBox" onclick="openGift()">
+
+        <!-- Flower Shower -->
+        <div class="flower-shower" id="flowerShower"></div>
+    </div>
 
     <!-- Happy Birthday Message -->
     <div class="explosion" id="message">🎉 Happy Birthday! 🎉</div>
@@ -138,13 +102,11 @@
         <p>Keep Trying.. You can guess it 😎</p>
     </div>
 
-    
-
     <!-- Final Message -->
     <div class="final-message" id="finalMessage">
         Hey! I hope you're doing great and feeling happy. Just wanted to send you the best birthday wishes! May your day be filled with joy, laughter, and unforgettable moments. Wishing you a year ahead filled with love, success, and all your dreams coming true. And don’t worry, I’m not here to spill any surprises! 😆😂 Happy Birthday! 🎉🥳
     </div>
-    
+
     <!-- Audio -->
     <audio id="birthdayAudio">
         <source src="happy_birthday.mp3" type="audio/mp3">
@@ -156,6 +118,7 @@
             const message = document.getElementById('message');
             const passwordBox = document.getElementById('passwordBox');
             const audio = document.getElementById("birthdayAudio");
+            const flowerShower = document.getElementById('flowerShower');
 
             // Hide the gift box
             giftBox.style.display = "none";
@@ -168,6 +131,9 @@
 
             // Play the birthday song
             audio.play();
+
+            // Add flower shower animation
+            createFlowerShower(flowerShower);
         }
 
         function checkPassword() {
@@ -187,6 +153,24 @@
             }
         }
 
+        // Function to create flower shower
+        function createFlowerShower(container) {
+            const colors = ["red", "white", "pink", "purple"];
+            const numFlowers = 50;
+
+            for (let i = 0; i < numFlowers; i++) {
+                const flower = document.createElement("div");
+                flower.classList.add("flower");
+
+                // Randomize flower properties
+                flower.style.left = `${Math.random() * 100}%`;
+                flower.style.top = `${Math.random() * -100}px`; // Start above the screen
+                flower.style.animationDuration = `${Math.random() * 2 + 1}s`; // Random duration between 1-3 seconds
+                flower.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+                container.appendChild(flower);
+            }
+        }
     </script>
 
 </body>
