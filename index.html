@@ -9,7 +9,7 @@
     /* Global Styles */
     body {
       margin: 0;
-      overflow: hidden;
+      /* Removed overflow: hidden to allow scrolling for final message on mobile */
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f1f1f1;
       display: flex;
@@ -18,7 +18,7 @@
       align-items: center;
       height: 100vh;
       position: relative;
-      overflow-y: auto;
+      overflow-y: auto; /* Added to enable scrolling */
     }
 
     /* Full-Screen Background Image */
@@ -150,7 +150,7 @@
     .final-message {
       display: none;
       max-width: 90%;
-      margin: 4vh auto;
+      margin: 2vh auto; /* Reduced margin to fit more content */
       font-size: 3.5vw;
       max-font-size: 28px;
       min-font-size: 16px;
@@ -161,7 +161,7 @@
       border-radius: 15px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
       text-align: center;
-      line-height: 1.8;
+      line-height: 1.6; /* Adjusted for better readability */
       text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
       word-wrap: break-word;
     }
@@ -201,35 +201,31 @@
     @keyframes fall {
       0% {
         opacity: 1;
-        transform: translate(0, 0) rotate(0deg);
+        transform: translateY(0);
       }
       100% {
         opacity: 0;
-        transform: translate(var(--end-x), var(--end-y)) rotate(var(--rotate));
+        transform: translateY(100vh) translateX(var(--offset-x));
       }
-    }
-
-    audio {
-      display: none;
     }
 
     /* Media Queries for Responsiveness */
     @media screen and (max-width: 600px) {
       .gift-box {
-        width: 12vw;
-        height: 12vw;
+        width: 8vw; /* Reduced from 12vw to make smaller on mobile */
+        height: 8vw;
         min-width: 20px;
         min-height: 20px;
       }
 
       .explosion {
-        font-size: 3.5vw;
+        font-size: 4vw; /* Increased from 3.5vw for bigger text */
         min-font-size: 12px;
       }
 
       input[type="password"], button, .hint {
-        font-size: 3vw;
-        min-font-size: 8px;
+        font-size: 3.5vw; /* Increased from 3vw for bigger text */
+        min-font-size: 10px;
       }
 
       .wrong-password img {
@@ -238,13 +234,14 @@
       }
 
       .final-message {
-        font-size: 4.5vw;
-        min-font-size: 14px;
+        font-size: 4vw; /* Increased from 4.5vw for better readability */
+        min-font-size: 12px;
         padding: 1.5vh 1.5vw;
+        margin: 1vh auto; /* Reduced margin to fit content */
       }
 
       .final-message strong {
-        font-size: 5vw;
+        font-size: 5.5vw; /* Increased from 5vw */
         min-font-size: 16px;
       }
 
@@ -253,6 +250,18 @@
         height: 3vw;
         min-width: 10px;
         min-height: 10px;
+        animation: fallMobile 4s linear forwards;
+      }
+
+      @keyframes fallMobile {
+        0% {
+          opacity: 1;
+          transform: translateY(-100vh) translateX(var(--offset-x));
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(100vh) translateX(var(--offset-x));
+        }
       }
     }
 
@@ -339,7 +348,7 @@
   <div class="flower-shower" id="flowerShower"></div>
 
   <!-- Audio -->
-  <audio id="birthdayAudio" autoplay loop>
+  <audio id="birthdayAudio">
     <source src="happy_birthday.mp3" type="audio/mp3">
   </audio>
 
@@ -357,9 +366,11 @@
 
       setTimeout(() => {
         passwordBox.style.display = "block";
+        // Attempt to play audio with user interaction
+        audio.play().catch(error => {
+          console.log("Audio play failed:", error);
+        });
       }, 1000);
-
-      audio.play();
     }
 
     function checkPassword() {
@@ -415,20 +426,17 @@
         flower.classList.add("flower");
 
         const size = Math.random() * 20 + 15;
-        const startX = Math.random() * 100;
-        const startY = Math.random() * 100;
-        const endX = (Math.random() * 200 - 100) + 'vw';
-        const endY = (Math.random() * 200 - 100) + 'vh';
-        const rotate = (Math.random() * 720 - 360) + 'deg';
+        const startX = Math.random() * 100; // Random horizontal position
+        const direction = Math.random() > 0.5 ? 1 : -1; // Random direction: top to bottom or bottom to top
+        const startY = direction === 1 ? -10 : 110; // Start above or below screen
+        const offsetX = (Math.random() * 50 - 25) + 'vw'; // Random horizontal offset
 
         flower.style.width = `${size}px`;
         flower.style.height = `${size}px`;
         flower.style.backgroundImage = `url(${flowerImages[Math.floor(Math.random() * flowerImages.length)]})`;
         flower.style.left = `${startX}%`;
         flower.style.top = `${startY}%`;
-        flower.style.setProperty('--end-x', endX);
-        flower.style.setProperty('--end-y', endY);
-        flower.style.setProperty('--rotate', rotate);
+        flower.style.setProperty('--offset-x', offsetX);
         flower.style.animationDuration = `${Math.random() * 1 + 4}s`;
         flower.style.animationDelay = `${Math.random() * 1}s`;
 
