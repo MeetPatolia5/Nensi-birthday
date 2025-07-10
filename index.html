@@ -17,7 +17,7 @@
       align-items: center;
       height: 100vh;
       position: relative;
-      overflow-y: auto; /* Enable scrolling for final message */
+      overflow-y: auto; /* Ensure scrolling for final message */
     }
 
     /* Full-Screen Background Image */
@@ -113,7 +113,7 @@
       font-size: 2.5vw;
       max-font-size: 14px;
       min-font-size: 10px;
-      color: #a64dff; /* Changed to a lighter purple */
+      color: #b266ff;
       text-shadow: 1px 1px 5px rgba(255, 255, 255, 0.7);
     }
 
@@ -140,26 +140,26 @@
     .final-message {
       display: none;
       max-width: 90%;
-      margin: 1vh auto; /* Reduced margin to fit content */
-      font-size: 3.5vw;
-      max-font-size: 28px;
-      min-font-size: 16px;
+      margin: 0.5vh auto; /* Further reduced margin to fit content */
+      font-size: 3vw; /* Reduced from 3.5vw to fit more on mobile */
+      max-font-size: 24px; /* Reduced from 28px */
+      min-font-size: 14px; /* Adjusted for readability */
       font-family: 'Great+Vibes', cursive;
       color: #fff;
       background: linear-gradient(135deg, rgba(255, 105, 180, 0.8), rgba(255, 182, 193, 0.8));
-      padding: 2vh 2vw;
+      padding: 1.5vh 1.5vw; /* Reduced padding to fit content */
       border-radius: 15px;
       box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
       text-align: center;
-      line-height: 1.6;
+      line-height: 1.4; /* Tightened line spacing */
       text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
       word-wrap: break-word;
     }
 
     .final-message strong {
-      font-size: 4vw;
-      max-font-size: 32px;
-      min-font-size: 18px;
+      font-size: 3.5vw; /* Reduced from 4vw */
+      max-font-size: 28px; /* Reduced from 32px */
+      min-font-size: 16px;
       color: #ff4081;
     }
 
@@ -196,19 +196,19 @@
     /* Media Queries for Responsiveness */
     @media screen and (max-width: 600px) {
       .gift-box {
-        width: 6vw; /* Reduced from 8vw to make smaller on mobile */
-        height: 6vw;
-        min-width: 20px;
-        min-height: 20px;
+        width: 3vw; /* Further reduced from 4vw to make smaller on S24 Ultra */
+        height: 3vw;
+        min-width: 15px;
+        min-height: 15px;
       }
 
       .explosion {
-        font-size: 4.5vw; /* Increased from 4vw for bigger text */
+        font-size: 5vw; /* Increased for better visibility */
         min-font-size: 14px;
       }
 
       input[type="password"], button, .hint {
-        font-size: 4vw; /* Increased from 3.5vw for bigger text */
+        font-size: 4.5vw; /* Increased for better visibility */
         min-font-size: 12px;
       }
 
@@ -218,15 +218,15 @@
       }
 
       .final-message {
-        font-size: 4.5vw; /* Increased from 4vw for better readability */
-        min-font-size: 14px;
-        padding: 1.5vh 1.5vw;
-        margin: 0.5vh auto; /* Reduced margin to fit content */
+        font-size: 3.5vw; /* Adjusted to fit more content */
+        min-font-size: 12px;
+        padding: 1vh 1vw; /* Further reduced padding */
+        margin: 0.2vh auto; /* Minimized margin */
       }
 
       .final-message strong {
-        font-size: 6vw; /* Increased from 5.5vw */
-        min-font-size: 18px;
+        font-size: 4.5vw; /* Adjusted for emphasis */
+        min-font-size: 16px;
       }
     }
 
@@ -255,12 +255,12 @@
 
       .final-message {
         font-size: 2.5vw;
-        max-font-size: 28px;
+        max-font-size: 24px;
       }
 
       .final-message strong {
         font-size: 3vw;
-        max-font-size: 32px;
+        max-font-size: 28px;
       }
     }
   </style>
@@ -291,7 +291,7 @@
   <div class="wrong-password" id="wrongMessage">
     <img src="cat.png" alt="Oops" id="wrongImage">
     <p id="wrongText1" style="color: #ff6b6b; font-family: 'Cursive', cursive;">😅🥲😬😵</p>
-    <p id="wrongText2" style="color: #ff6b6b; font-family: 'Cursive', cursive;">Arre Nensuu! Galtiyaan toh insaan se hi hoti hain! 🥳</p>
+    <p id="wrongText2" style="color: #ff3b6b; font-family: 'Cursive', cursive;">Arre Nensuu! Galtiyaan toh insaan se hi hoti hain! 🥳</p>
     <p id="wrongText3" style="color: #ff6b6b; font-family: 'Cursive', cursive;">No stress, keep guessing, you’ll crack it! 😎👍✨</p>
   </div>
 
@@ -301,7 +301,7 @@
        Aetla naam mai rakhya che tara ke badha include kris to letter tara names thij bharai jase! 😜✨</p>
     <p>First of all, sending you the <strong>best birthday wishes</strong>! 🎉 May your day be filled with <em>joy</em>, <em>laughter</em>, and <em>unforgettable moments</em>. 🥳💫</p>
     <p>I still remember when we met first time i.e. on <em>2nd May 2025</em> 📅💕 wherein we had awkward moments but we both seamlessly handled that situation together and talked for around 2 hours like we used to know each other from long time. 😌❤️</p>
-    <p>Then tu <em>Bali gai ti</em> tyarni constant gossips uffff 😜💬, also our first movie date jyare mai popcorn offer kryu then u were hesitating to have and when I insisted you repeatedly then tu baby ni jem bucket mathi khava lagi! 🍿😘</p>
+    <p>Then tu <em>Bali gai ti</em> tyarni constant gossips uffff 😜💬, also our first movie date jyare mai popcorn offer kryu then u were hesitating to have and when I insisted you repeatedly then te baby ni jem bucket mathi khava lagi! 🍿😘</p>
     <p>And how can I forget our <em>Jal ceremony</em>, especially each and every pose and moment that we captured via photos and reel are framed into both my <em>mind</em> and <em>heart</em>. 📸💖</p>
     <p>And of course our never ending confusion while selecting dineout places hehehe! 😆🍽️</p>
     <p>Chal have bov senti thai gai to aatlu enough che 😅, keeping it aside, wishing you a year ahead filled with <em>love</em>, <em>success</em>, and all your <em>dreams coming true</em>. 🌟💌</p>
